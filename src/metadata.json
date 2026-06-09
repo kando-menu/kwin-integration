@@ -1,0 +1,16 @@
+{
+  "KPlugin": {
+    "Name": "Kando KWin Integration",
+    "Description": "KWin plugin exposing a D-Bus API for Kando.",
+    "Version": "0.1.0",
+    "License": "MIT",
+    "Authors": [
+      {
+        "Email": "code@simonschneegans.de",
+        "Name": "Simon Schneegans"
+      }
+    ],
+    "EnabledByDefault": true,
+    "Category": "Accessibility"
+  }
+}
