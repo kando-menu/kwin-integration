@@ -1,19 +1,20 @@
 #pragma once
 
-#include <effect/effect.h>
+#include <QObject>
 #include <QVariantMap>
+#include <effect/effect.h>
 
 class KandoIntegrationAdaptor;
 
 class KandoKWinIntegrationPlugin : public KWin::Effect {
   Q_OBJECT
 
- public:
+public:
   explicit KandoKWinIntegrationPlugin();
   ~KandoKWinIntegrationPlugin() override;
 
   QVariantMap wmInfo() const;
 
- private:
-  KandoIntegrationAdaptor* mAdaptor = nullptr;
+private:
+  KandoIntegrationAdaptor *mAdaptor;
 };

@@ -1,5 +1,5 @@
-#include <effect/effect.h>
 #include <KPluginFactory>
+#include <effect/effect.h>
 
 #include "plugin/KandoKWinIntegrationPlugin.h"
 
@@ -8,14 +8,12 @@ class KWIN_EXPORT KandoIntegrationFactory : public KWin::EffectPluginFactory {
   Q_PLUGIN_METADATA(IID EffectPluginFactory_iid FILE "metadata.json")
   Q_INTERFACES(KPluginFactory)
 
- public:
-  KWin::Effect* createEffect() const override {
+public:
+  KWin::Effect *createEffect() const override {
     return new KandoKWinIntegrationPlugin();
   }
 
-  bool isSupported() const override {
-    return true;
-  }
+  bool isSupported() const override { return true; }
 };
 
 #include "main.moc"

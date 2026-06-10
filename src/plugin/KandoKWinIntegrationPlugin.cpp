@@ -3,16 +3,20 @@
 #include <QDBusConnection>
 #include <QDBusError>
 #include <QDebug>
+#include <QPointer>
+#include <QtMath>
+#include <effect/effecthandler.h>
+#include <effect/effectwindow.h>
 
 #include "../dbus/KandoIntegrationAdaptor.h"
 
 namespace {
 const auto kServiceName = QStringLiteral("menu.kando.KWinIntegration");
 const auto kObjectPath = QStringLiteral("/menu/kando/KWinIntegration");
-}  // namespace
+} // namespace
 
 KandoKWinIntegrationPlugin::KandoKWinIntegrationPlugin()
-  : KWin::Effect(), mAdaptor(new KandoIntegrationAdaptor(this)) {
+    : KWin::Effect(), mAdaptor(new KandoIntegrationAdaptor(this)) {
   auto bus = QDBusConnection::sessionBus();
 
   if (!bus.registerService(kServiceName)) {
@@ -20,7 +24,7 @@ KandoKWinIntegrationPlugin::KandoKWinIntegrationPlugin()
                << bus.lastError().message();
   }
 
-  if (!bus.registerObject(kObjectPath, this)) {
+  if (!bus.registerObject(kObjectPath, this, QDBusConnection::ExportAdaptors)) {
     qWarning() << "Failed to register D-Bus object" << kObjectPath
                << bus.lastError().message();
   }
@@ -33,15 +37,29 @@ KandoKWinIntegrationPlugin::~KandoKWinIntegrationPlugin() {
 }
 
 QVariantMap KandoKWinIntegrationPlugin::wmInfo() const {
-  // TODO: Read active window, pointer, and work area from KWin runtime state.
+  const auto pointerPos = KWin::effects->cursorPos();
+  const auto activeWindow = KWin::effects->activeWindow();
+
+  const auto windowName = activeWindow ? activeWindow->caption() : QString();
+  const auto appName = activeWindow ? activeWindow->windowClass() : QString();
+
+  QRectF workArea;
+  if (activeWindow) {
+    workArea = KWin::effects->clientArea(KWin::MaximizeArea, activeWindow);
+  } else {
+    // Fallback to the work area at the current pointer location.
+    workArea = KWin::effects->clientArea(KWin::MaximizeArea,
+                                         pointerPos.toPoint(), nullptr);
+  }
+
   return {
-      {QStringLiteral("windowName"), QString()},
-      {QStringLiteral("appName"), QString()},
-      {QStringLiteral("pointerX"), 0},
-      {QStringLiteral("pointerY"), 0},
-      {QStringLiteral("workAreaX"), 0},
-      {QStringLiteral("workAreaY"), 0},
-      {QStringLiteral("workAreaWidth"), 0},
-      {QStringLiteral("workAreaHeight"), 0},
+      {QStringLiteral("windowName"), windowName},
+      {QStringLiteral("appName"), appName},
+      {QStringLiteral("pointerX"), qRound(pointerPos.x())},
+      {QStringLiteral("pointerY"), qRound(pointerPos.y())},
+      {QStringLiteral("workAreaX"), qRound(workArea.x())},
+      {QStringLiteral("workAreaY"), qRound(workArea.y())},
+      {QStringLiteral("workAreaWidth"), qRound(workArea.width())},
+      {QStringLiteral("workAreaHeight"), qRound(workArea.height())},
   };
 }
