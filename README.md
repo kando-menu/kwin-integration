@@ -1,18 +1,24 @@
 <!--
 SPDX-FileCopyrightText: Simon Schneegans <code@simonschneegans.de>
-SPDX-License-Identifier: CC-BY-4.0
+SPDX-License-Identifier: CC0-1.0
 -->
 
-# kwin-integration
+# KWin Integration for Kando
 
-Basic scaffold for a KDE/KWin binary plugin that exposes a queryable D-Bus API for Kando.
+This KWin plugin is required for 🌸 [Kando](https://github.com/kando-menu/kando) on KDE Plasma under Wayland.
+Via a D-Bus interface, it provides the name of the currently focused window, the current mouse pointer position, and a few more pieces of information required by Kando.
 
-## Build
+## ⬇️ Installation
+
+For now, you have to build and install this plugin manually.
+You can do this by running the following commands in a terminal:
 
 ```bash
+git clone https://github.com/kando-menu/kwin-integration.git
+cd kwin-integration
 cmake -S . -B build
 cmake --build build --config Release
-cmake --install build --config Release
+sudo cmake --install build --config Release
 ```
 
 Required development packages include Qt6, ECM, KF6 CoreAddons, and KWin development files.
