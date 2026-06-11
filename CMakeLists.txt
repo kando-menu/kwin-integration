@@ -1,3 +1,13 @@
+# -------------------------------------------------------------------------------------- #
+#    _  _ ____ _  _ ___  ____                                                            #
+#    |_/  |__| |\ | |  \ |  |    This file belongs to Kando, the cross-platform          #
+#    | \_ |  | | \| |__/ |__|    pie menu. Read more on github.com/kando-menu/kando      #
+#                                                                                        #
+# -------------------------------------------------------------------------------------- #
+
+# SPDX-FileCopyrightText: Simon Schneegans <code@simonschneegans.de>
+# SPDX-License-Identifier: MIT
+
 cmake_minimum_required(VERSION 3.20)
 
 project(KandoKWinIntegration VERSION 0.1.0 LANGUAGES CXX)
@@ -28,21 +38,6 @@ find_package(KWin REQUIRED COMPONENTS kwin)
 find_package(KF6 ${KF6_MIN_VERSION} REQUIRED COMPONENTS CoreAddons)
 
 find_program(QT_QMAKE_EXECUTABLE qmake)
-
-if(NOT QT_QMAKE_EXECUTABLE)
-    message(FATAL_ERROR "qmake is not found.")
-endif()
-
-execute_process(COMMAND ${QT_QMAKE_EXECUTABLE} -query QT_INSTALL_PLUGINS
-    OUTPUT_VARIABLE QT_PLUGINS_DIR
-    OUTPUT_STRIP_TRAILING_WHITESPACE
-)
-
-if(QT_PLUGINS_DIR)
-    message(STATUS "Qt6 plugin directory:" "${QT_PLUGINS_DIR}")
-else()
-    message(FATAL_ERROR "Qt6 plugin directory cannot be detected.")
-endif()
 
 add_subdirectory(src)
 
