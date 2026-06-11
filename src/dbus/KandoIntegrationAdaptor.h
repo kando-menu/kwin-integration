@@ -1,3 +1,13 @@
+//////////////////////////////////////////////////////////////////////////////////////////
+//   _  _ ____ _  _ ___  ____                                                           //
+//   |_/  |__| |\ | |  \ |  |    This file belongs to Kando, the cross-platform         //
+//   | \_ |  | | \| |__/ |__|    pie menu. Read more on github.com/kando-menu/kando     //
+//                                                                                      //
+//////////////////////////////////////////////////////////////////////////////////////////
+
+// SPDX-FileCopyrightText: Simon Schneegans <code@simonschneegans.de>
+// SPDX-License-Identifier: MIT
+
 #pragma once
 
 #include <QDBusAbstractAdaptor>
@@ -10,13 +20,13 @@ class KandoIntegrationAdaptor : public QDBusAbstractAdaptor {
   Q_OBJECT
   Q_CLASSINFO("D-Bus Interface", "menu.kando.KWinIntegration1")
 
-public:
-  explicit KandoIntegrationAdaptor(KandoKWinIntegrationPlugin *plugin);
+ public:
+  explicit KandoIntegrationAdaptor(KandoKWinIntegrationPlugin* plugin);
 
-public Q_SLOTS:
+ public Q_SLOTS:
   QVariantMap GetWMInfo() const;
   QString Ping() const;
 
-private:
-  KandoKWinIntegrationPlugin *mPlugin;
+ private:
+  KandoKWinIntegrationPlugin* mPlugin;
 };

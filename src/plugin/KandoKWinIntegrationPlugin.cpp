@@ -1,19 +1,30 @@
+//////////////////////////////////////////////////////////////////////////////////////////
+//   _  _ ____ _  _ ___  ____                                                           //
+//   |_/  |__| |\ | |  \ |  |    This file belongs to Kando, the cross-platform         //
+//   | \_ |  | | \| |__/ |__|    pie menu. Read more on github.com/kando-menu/kando     //
+//                                                                                      //
+//////////////////////////////////////////////////////////////////////////////////////////
+
+// SPDX-FileCopyrightText: Simon Schneegans <code@simonschneegans.de>
+// SPDX-License-Identifier: MIT
+
 #include "KandoKWinIntegrationPlugin.h"
+
+#include <effect/effecthandler.h>
+#include <effect/effectwindow.h>
 
 #include <QDBusConnection>
 #include <QDBusError>
 #include <QDebug>
 #include <QPointer>
 #include <QtMath>
-#include <effect/effecthandler.h>
-#include <effect/effectwindow.h>
 
 #include "../dbus/KandoIntegrationAdaptor.h"
 
 namespace {
 const auto kServiceName = QStringLiteral("menu.kando.KWinIntegration");
-const auto kObjectPath = QStringLiteral("/menu/kando/KWinIntegration");
-} // namespace
+const auto kObjectPath  = QStringLiteral("/menu/kando/KWinIntegration");
+}  // namespace
 
 KandoKWinIntegrationPlugin::KandoKWinIntegrationPlugin()
     : KWin::Effect(), mAdaptor(new KandoIntegrationAdaptor(this)) {
@@ -37,29 +48,29 @@ KandoKWinIntegrationPlugin::~KandoKWinIntegrationPlugin() {
 }
 
 QVariantMap KandoKWinIntegrationPlugin::wmInfo() const {
-  const auto pointerPos = KWin::effects->cursorPos();
+  const auto pointerPos   = KWin::effects->cursorPos();
   const auto activeWindow = KWin::effects->activeWindow();
 
   const auto windowName = activeWindow ? activeWindow->caption() : QString();
-  const auto appName = activeWindow ? activeWindow->windowClass() : QString();
+  const auto appName    = activeWindow ? activeWindow->windowClass() : QString();
 
   QRectF workArea;
   if (activeWindow) {
     workArea = KWin::effects->clientArea(KWin::MaximizeArea, activeWindow);
   } else {
     // Fallback to the work area at the current pointer location.
-    workArea = KWin::effects->clientArea(KWin::MaximizeArea,
-                                         pointerPos.toPoint(), nullptr);
+    workArea =
+      KWin::effects->clientArea(KWin::MaximizeArea, pointerPos.toPoint(), nullptr);
   }
 
   return {
-      {QStringLiteral("windowName"), windowName},
-      {QStringLiteral("appName"), appName},
-      {QStringLiteral("pointerX"), qRound(pointerPos.x())},
-      {QStringLiteral("pointerY"), qRound(pointerPos.y())},
-      {QStringLiteral("workAreaX"), qRound(workArea.x())},
-      {QStringLiteral("workAreaY"), qRound(workArea.y())},
-      {QStringLiteral("workAreaWidth"), qRound(workArea.width())},
-      {QStringLiteral("workAreaHeight"), qRound(workArea.height())},
+    {QStringLiteral("windowName"), windowName},
+    {QStringLiteral("appName"), appName},
+    {QStringLiteral("pointerX"), qRound(pointerPos.x())},
+    {QStringLiteral("pointerY"), qRound(pointerPos.y())},
+    {QStringLiteral("workAreaX"), qRound(workArea.x())},
+    {QStringLiteral("workAreaY"), qRound(workArea.y())},
+    {QStringLiteral("workAreaWidth"), qRound(workArea.width())},
+    {QStringLiteral("workAreaHeight"), qRound(workArea.height())},
   };
 }
