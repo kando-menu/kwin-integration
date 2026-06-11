@@ -54,14 +54,8 @@ QVariantMap KandoKWinIntegrationPlugin::wmInfo() const {
   const auto windowName = activeWindow ? activeWindow->caption() : QString();
   const auto appName    = activeWindow ? activeWindow->windowClass() : QString();
 
-  QRectF workArea;
-  if (activeWindow) {
-    workArea = KWin::effects->clientArea(KWin::MaximizeArea, activeWindow);
-  } else {
-    // Fallback to the work area at the current pointer location.
-    workArea =
-      KWin::effects->clientArea(KWin::MaximizeArea, pointerPos.toPoint(), nullptr);
-  }
+  QRectF workArea =
+    KWin::effects->clientArea(KWin::MaximizeArea, pointerPos.toPoint(), nullptr);
 
   return {
     {QStringLiteral("windowName"), windowName},
