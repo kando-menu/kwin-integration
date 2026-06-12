@@ -12,7 +12,6 @@
 
 #include <effect/effect.h>
 
-#include <QObject>
 #include <QVariantMap>
 
 #include "input/PointerInput.h"

@@ -11,13 +11,10 @@
 #include "KandoKWinIntegrationPlugin.h"
 
 #include <effect/effecthandler.h>
-#include <effect/effectwindow.h>
 
 #include <QDBusConnection>
 #include <QDBusError>
 #include <QDebug>
-#include <QPointer>
-#include <QtMath>
 
 #include "../dbus/KandoIntegrationAdaptor.h"
 
