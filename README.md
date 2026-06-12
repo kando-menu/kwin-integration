@@ -21,7 +21,7 @@ cmake --build build --config Release
 sudo cmake --install build --config Release
 ```
 
-Required development packages include Qt6, ECM, KF6 CoreAddons, and KWin development files.
+Required development packages include Qt6, ECM, and KWin development files.
 For debian-based distributions, you can install these with:
 
 ```bash
