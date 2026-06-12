@@ -39,5 +39,3 @@ find_package(KWin REQUIRED COMPONENTS kwin)
 add_subdirectory(src)
 
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
-
-message(STATUS "Installing to: ${QT_PLUGINS_DIR}")
