@@ -14,6 +14,7 @@ target_sources(kandointegration PRIVATE
   main.cpp
   plugin/KandoKWinIntegrationPlugin.cpp
   dbus/KandoIntegrationAdaptor.cpp
+  input/PointerInput.cpp
 )
 
 target_link_libraries(kandointegration PRIVATE

@@ -35,9 +35,6 @@ set(CMAKE_AUTOUIC ON)
 
 find_package(Qt6 6.6 REQUIRED COMPONENTS Core DBus Widgets)
 find_package(KWin REQUIRED COMPONENTS kwin)
-find_package(KF6 ${KF6_MIN_VERSION} REQUIRED COMPONENTS CoreAddons)
-
-find_program(QT_QMAKE_EXECUTABLE qmake)
 
 add_subdirectory(src)
 

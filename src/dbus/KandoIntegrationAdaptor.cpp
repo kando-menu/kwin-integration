@@ -15,6 +15,6 @@
 KandoIntegrationAdaptor::KandoIntegrationAdaptor(KandoKWinIntegrationPlugin* plugin)
     : QDBusAbstractAdaptor(plugin), mPlugin(plugin) {}
 
-QVariantMap KandoIntegrationAdaptor::GetWMInfo() const { return mPlugin->wmInfo(); }
+QVariantMap KandoIntegrationAdaptor::GetWMInfo() const { return mPlugin->getWMInfo(); }
 
 QString KandoIntegrationAdaptor::Ping() const { return QStringLiteral("pong"); }

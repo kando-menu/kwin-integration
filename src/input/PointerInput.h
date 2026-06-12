@@ -10,25 +10,22 @@
 
 #pragma once
 
-#include <effect/effect.h>
+#include <input.h>
 
-#include <QObject>
-#include <QVariantMap>
+#include <QPoint>
 
-#include "input/PointerInput.h"
-
-class KandoIntegrationAdaptor;
-
-class KandoKWinIntegrationPlugin : public KWin::Effect {
-  Q_OBJECT
-
+class PointerInput : public KWin::InputEventFilter {
  public:
-  explicit KandoKWinIntegrationPlugin();
-  ~KandoKWinIntegrationPlugin() override;
+  PointerInput();
+  ~PointerInput() override = default;
 
-  QVariantMap getWMInfo() const;
+  QPointF const& lastPosition() const;
+
+  bool pointerMotion(KWin::PointerMotionEvent* event) override;
+  bool tabletToolAxisEvent(KWin::TabletToolAxisEvent* event) override;
+  bool tabletToolProximityEvent(KWin::TabletToolProximityEvent* event) override;
 
  private:
-  KandoIntegrationAdaptor* mAdaptor;
-  PointerInput mPointerInput;
+  QPointF mLastPosition{0.0, 0.0};
+  bool mStylusProximity{false};
 };
