@@ -22,3 +22,12 @@ sudo cmake --install build --config Release
 ```
 
 Required development packages include Qt6, ECM, KF6 CoreAddons, and KWin development files.
+For debian-based distributions, you can install these with:
+
+```bash
+sudo apt install extra-cmake-modules kwin-dev qt6-base-dev
+```
+
+## 🗒️ Changelog
+
+See [changelog.md](./changelog.md) for a detailed list of changes.
