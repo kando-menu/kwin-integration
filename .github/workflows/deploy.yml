@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        ubuntu_version: ["22.04", "24.04", "25.10", "26.04"]
+        ubuntu_version: ["24.04", "25.10", "26.04"]
     container:
       image: ghcr.io/kando-menu/kwin-dev-containers-${{ matrix.ubuntu_version }}:latest
     steps:
