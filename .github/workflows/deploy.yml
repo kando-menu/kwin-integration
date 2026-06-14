@@ -15,6 +15,11 @@ jobs:
   extension_bundle:
     name: Compile and Upload Plugin
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ubuntu_version: ["22.04", "24.04", "25.10", "26.04"]
+    container:
+      image: ghcr.io/kando-menu/kwin-dev-containers-${{ matrix.ubuntu_version }}:latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 #v6.0.3
@@ -25,11 +30,23 @@ jobs:
         run: |
           cmake -S . -B build
           cmake --build build --config Release
+      - name: Determine KWin Version
+        id: kwin_version
+        shell: bash
+        run: |
+          VERSION="$(dpkg-query -W -f='${Version}' kwin-wayland 2>/dev/null \
+            || dpkg-query -W -f='${Version}' kwin-x11 2>/dev/null \
+            || dpkg-query -W -f='${Version}' kwin-dev 2>/dev/null \
+            || echo unknown)"
+          VERSION="${VERSION%%-*}"
+          VERSION="${VERSION//[^0-9A-Za-z._-]/_}"
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
       - name: Upload Release
         uses: svenstaro/upload-release-action@29e53e917877a24fad85510ded594ab3c9ca12de #v2.11.5
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: build/bin/kwin/effects/plugins/kandointegration.so
+          asset_name: kandointegration-kwin-${{ steps.kwin_version.outputs.version }}.so
           tag: ${{ github.ref }}
           overwrite: true
           prerelease: true
