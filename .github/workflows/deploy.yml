@@ -14,12 +14,13 @@ on:
 jobs:
   compile-and-upload:
     name: Compile and Upload Plugin
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.architecture }}
     strategy:
       matrix:
-        ubuntu_version: ["25.10", "26.04"]
+        version: ["25.04", "25.10", "26.04"]
+        architecture: [ubuntu-latest, ubuntu-latest-arm]
     container:
-      image: ghcr.io/kando-menu/kwin-dev-containers-${{ matrix.ubuntu_version }}:latest
+      image: ghcr.io/kando-menu/kwin-dev-containers-${{ matrix.version }}:latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 #v6.0.3
@@ -36,14 +37,32 @@ jobs:
             || dpkg-query -W -f='${Version}' kwin-dev 2>/dev/null \
             || echo unknown)"
           VERSION="${VERSION%%-*}"
+          VERSION="${VERSION#*:}"
           VERSION="${VERSION//[^0-9A-Za-z._-]/_}"
           echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+      - name: Package Release Asset
+        id: package_asset
+        shell: bash
+        run: |
+          if [[ "${{ matrix.architecture }}" == "ubuntu-latest-arm" ]]; then
+            ARCH_SUFFIX="arm"
+          else
+            ARCH_SUFFIX="x86"
+          fi
+          ASSET_NAME="kandointegration-for-kwin-${{ steps.kwin_version.outputs.version }}-${ARCH_SUFFIX}.zip"
+          mkdir -p build/release-asset
+          cp build/bin/kwin/effects/plugins/kandointegration.so build/release-asset/kandointegration.so
+          (
+            cd build/release-asset
+            cmake -E tar cf "../${ASSET_NAME}" --format=zip kandointegration.so
+          )
+          echo "asset_name=${ASSET_NAME}" >> "$GITHUB_OUTPUT"
       - name: Upload Release
         uses: svenstaro/upload-release-action@29e53e917877a24fad85510ded594ab3c9ca12de #v2.11.5
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: build/bin/kwin/effects/plugins/kandointegration.so
-          asset_name: kandointegration-kwin-${{ steps.kwin_version.outputs.version }}.so
+          file: build/${{ steps.package_asset.outputs.asset_name }}
+          asset_name: ${{ steps.package_asset.outputs.asset_name }}
           tag: ${{ github.ref }}
           overwrite: true
           prerelease: true
