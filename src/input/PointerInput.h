@@ -22,8 +22,16 @@ class PointerInput : public KWin::InputEventFilter {
   QPointF const& lastPosition() const;
 
   bool pointerMotion(KWin::PointerMotionEvent* event) override;
+
+#if defined(KANDO_KWIN_HAS_TABLET_TOOL_AXIS_PROXIMITY_STRUCT_EVENTS)
   bool tabletToolAxisEvent(KWin::TabletToolAxisEvent* event) override;
   bool tabletToolProximityEvent(KWin::TabletToolProximityEvent* event) override;
+#elif defined(KANDO_KWIN_HAS_TABLET_TOOL_AXIS_PROXIMITY_TABLET_EVENT)
+  bool tabletToolAxisEvent(KWin::TabletEvent* event) override;
+  bool tabletToolProximityEvent(KWin::TabletEvent* event) override;
+#elif defined(KANDO_KWIN_HAS_TABLET_TOOL_EVENT)
+  bool tabletToolEvent(KWin::TabletEvent* event) override;
+#endif
 
  private:
   QPointF mLastPosition{0.0, 0.0};

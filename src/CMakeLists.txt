@@ -1,8 +1,8 @@
 # -------------------------------------------------------------------------------------- #
-#    _  _ ____ _  _ ___  ____                                                            #
-#    |_/  |__| |\ | |  \ |  |    This file belongs to Kando, the cross-platform          #
-#    | \_ |  | | \| |__/ |__|    pie menu. Read more on github.com/kando-menu/kando      #
-#                                                                                        #
+# _  _ ____ _  _ ___  ____                                                            #
+# |_/  |__| |\ | |  \ |  |    This file belongs to Kando, the cross-platform          #
+# | \_ |  | | \| |__/ |__|    pie menu. Read more on github.com/kando-menu/kando      #
+# #
 # -------------------------------------------------------------------------------------- #
 
 # SPDX-FileCopyrightText: Simon Schneegans <code@simonschneegans.de>
@@ -22,3 +22,13 @@ target_link_libraries(kandointegration PRIVATE
   Qt6::Core
   Qt6::DBus
 )
+
+if(DEFINED KWin_VERSION AND KWin_VERSION VERSION_GREATER_EQUAL "6.4.0")
+  target_compile_definitions(kandointegration PRIVATE
+    KANDO_KWIN_HAS_TABLET_TOOL_AXIS_PROXIMITY_STRUCT_EVENTS)
+elseif(DEFINED KWin_VERSION AND KWin_VERSION VERSION_GREATER_EQUAL "6.3.0")
+  target_compile_definitions(kandointegration PRIVATE
+    KANDO_KWIN_HAS_TABLET_TOOL_AXIS_PROXIMITY_TABLET_EVENT)
+else()
+  target_compile_definitions(kandointegration PRIVATE KANDO_KWIN_HAS_TABLET_TOOL_EVENT)
+endif()
