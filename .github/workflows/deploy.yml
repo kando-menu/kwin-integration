@@ -49,11 +49,13 @@ jobs:
         shell: bash
         run: |
           VERSION="unknown"
+          CANDIDATE=""
 
           # Ubuntu / Debian containers
           if command -v dpkg-query >/dev/null 2>&1; then
             for PACKAGE in kwin-x11 kwin-dev; do
-              if VERSION="$(dpkg-query -W -f='${Version}' "$PACKAGE" 2>/dev/null)"; then
+              if CANDIDATE="$(dpkg-query -W -f='${Version}' "$PACKAGE" 2>/dev/null)"; then
+                VERSION="$CANDIDATE"
                 break
               fi
             done
@@ -62,7 +64,8 @@ jobs:
           # Fedora / RPM containers
           if [[ "$VERSION" == "unknown" ]] && command -v rpm >/dev/null 2>&1; then
             for PACKAGE in kwin kwin-devel kwin-libs; do
-              if VERSION="$(rpm -q --qf '%{VERSION}' "$PACKAGE" 2>/dev/null)"; then
+              if CANDIDATE="$(rpm -q --qf '%{VERSION}' "$PACKAGE" 2>/dev/null)"; then
+                VERSION="$CANDIDATE"
                 break
               fi
             done
