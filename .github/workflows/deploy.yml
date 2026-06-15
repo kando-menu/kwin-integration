@@ -34,7 +34,7 @@ jobs:
             version: "43"
           - distro: fedora
             version: "44"
-        architecture: [ubuntu-latest, ubuntu-latest-arm]
+        architecture: [ubuntu-26.04, ubuntu-26.04-arm]
     container:
       image: ghcr.io/kando-menu/kwin-dev-containers-${{ matrix.target.distro }}-${{ matrix.target.version }}:latest
     steps:
@@ -69,9 +69,9 @@ jobs:
         shell: bash
         run: |
           if [[ "${{ matrix.architecture }}" == "ubuntu-latest-arm" ]]; then
-            ARCH_SUFFIX="arm"
+            ARCH_SUFFIX="arm64"
           else
-            ARCH_SUFFIX="x86"
+            ARCH_SUFFIX="x64"
           fi
           ASSET_NAME="${{ matrix.target.distro }}-${{ matrix.target.version }}-kwin-${{ steps.kwin_version.outputs.version }}-${ARCH_SUFFIX}.zip"
           mkdir -p build/release-asset
