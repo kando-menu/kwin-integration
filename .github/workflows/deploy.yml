@@ -52,18 +52,20 @@ jobs:
 
           # Ubuntu / Debian containers
           if command -v dpkg-query >/dev/null 2>&1; then
-            VERSION="$(dpkg-query -W -f='${Version}' kwin-wayland 2>/dev/null \
-              || dpkg-query -W -f='${Version}' kwin-x11 2>/dev/null \
-              || dpkg-query -W -f='${Version}' kwin-dev 2>/dev/null \
-              || echo unknown)"
+            for PACKAGE in kwin-x11 kwin-dev; do
+              if VERSION="$(dpkg-query -W -f='${Version}' "$PACKAGE" 2>/dev/null)"; then
+                break
+              fi
+            done
           fi
 
           # Fedora / RPM containers
           if [[ "$VERSION" == "unknown" ]] && command -v rpm >/dev/null 2>&1; then
-            VERSION="$(rpm -q --qf '%{VERSION}' kwin 2>/dev/null \
-              || rpm -q --qf '%{VERSION}' kwin-devel 2>/dev/null \
-              || rpm -q --qf '%{VERSION}' kwin-libs 2>/dev/null \
-              || echo unknown)"
+            for PACKAGE in kwin kwin-devel kwin-libs; do
+              if VERSION="$(rpm -q --qf '%{VERSION}' "$PACKAGE" 2>/dev/null)"; then
+                break
+              fi
+            done
           fi
 
           VERSION="${VERSION%%-*}"
