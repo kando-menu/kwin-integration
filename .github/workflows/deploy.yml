@@ -49,26 +49,15 @@ jobs:
         shell: bash
         run: |
           VERSION="unknown"
-          CANDIDATE=""
 
           # Ubuntu / Debian containers
           if command -v dpkg-query >/dev/null 2>&1; then
-            for PACKAGE in kwin-x11 kwin-dev; do
-              if CANDIDATE="$(dpkg-query -W -f='${Version}' "$PACKAGE" 2>/dev/null)"; then
-                VERSION="$CANDIDATE"
-                break
-              fi
-            done
+            VERSION="$(dpkg-query -W -f='${Version}' kwin-dev 2>/dev/null || echo unknown)"
           fi
 
           # Fedora / RPM containers
           if [[ "$VERSION" == "unknown" ]] && command -v rpm >/dev/null 2>&1; then
-            for PACKAGE in kwin kwin-devel kwin-libs; do
-              if CANDIDATE="$(rpm -q --qf '%{VERSION}' "$PACKAGE" 2>/dev/null)"; then
-                VERSION="$CANDIDATE"
-                break
-              fi
-            done
+            VERSION="$(rpm -q --qf '%{VERSION}' kwin-devel 2>/dev/null || echo unknown)"
           fi
 
           VERSION="${VERSION%%-*}"
@@ -84,7 +73,7 @@ jobs:
           else
             ARCH_SUFFIX="x86"
           fi
-          ASSET_NAME="kandointegration-${{ matrix.target.distro }}-${{ matrix.target.version }}-kwin-${{ steps.kwin_version.outputs.version }}-${ARCH_SUFFIX}.zip"
+          ASSET_NAME="${{ matrix.target.distro }}-${{ matrix.target.version }}-kwin-${{ steps.kwin_version.outputs.version }}-${ARCH_SUFFIX}.zip"
           mkdir -p build/release-asset
           cp build/bin/kwin/effects/plugins/kandointegration.so build/release-asset/kandointegration.so
           (
