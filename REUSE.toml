@@ -4,7 +4,7 @@
 version = 1
 
 [[annotations]]
-path = "src/metadata.json"
+path = ["src/metadata.json", "docs/screenshot.png"]
 precedence = "aggregate"
 SPDX-FileCopyrightText = "Simon Schneegans <code@simonschneegans.de>"
 SPDX-License-Identifier = "CC0-1.0"
