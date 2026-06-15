@@ -24,8 +24,13 @@ kwin_wayland --version
 
 Choose a download for this KWin version that most closely matches your distribution (e.g. choose `ubuntu-*` for a debian-based distribution, and `fedora-*` for Fedora or similar distributions).
 Also make sure to choose the correct architecture (`-x64` for AMD64/Intel64, and `-arm64` for ARM64).
+If you do not know your architecture, you can check it with the following command:
 
-Then unzip the plugin and install it with the following command:
+```bash
+uname -m # prints x86_64 for AMD64/Intel64, and aarch64 for ARM64
+```
+
+Once downloaded, unzip the plugin and install it with the following command:
 
 ```bash
 sudo cp kandointegration.so /usr/lib/qt6/plugins/kwin/effects/plugins
