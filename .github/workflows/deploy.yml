@@ -68,7 +68,7 @@ jobs:
         id: package_asset
         shell: bash
         run: |
-          if [[ "${{ matrix.architecture }}" == "ubuntu-latest-arm" ]]; then
+          if [[ "${{ matrix.architecture }}" == "ubuntu-26.04-arm" ]]; then
             ARCH_SUFFIX="arm64"
           else
             ARCH_SUFFIX="x64"
