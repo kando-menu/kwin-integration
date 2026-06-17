@@ -11,6 +11,7 @@
 #include "KandoKWinIntegrationPlugin.h"
 
 #include <effect/effecthandler.h>
+#include <effect/effectwindow.h>
 
 #include <QDBusConnection>
 #include <QDBusError>
@@ -68,4 +69,47 @@ QVariantMap KandoKWinIntegrationPlugin::getWMInfo() const {
     {QStringLiteral("workAreaWidth"), qRound(workArea.width())},
     {QStringLiteral("workAreaHeight"), qRound(workArea.height())},
   };
+}
+
+QVariantList KandoKWinIntegrationPlugin::getOpenWindows() const {
+  QVariantList windows;
+
+  for (const auto* window : KWin::effects->stackingOrder()) {
+    if (!window || window->isDeleted() || !window->isManaged() ||
+        window->isSpecialWindow() || window->isSkipSwitcher()) {
+      continue;
+    }
+
+    const auto windowName = window->caption();
+    const auto appName    = window->windowClass();
+
+    if (windowName.isEmpty() && appName.isEmpty()) {
+      continue;
+    }
+
+    windows.push_back(QVariantList{windowName, appName});
+  }
+
+  return windows;
+}
+
+bool KandoKWinIntegrationPlugin::focusWindow(const QString& windowName,
+                                             const QString& appName) const {
+  const auto windows = KWin::effects->stackingOrder();
+
+  // Iterate top-most first so we focus the window the user most likely expects.
+  for (auto it = windows.rbegin(); it != windows.rend(); ++it) {
+    auto* window = *it;
+
+    if (!window || window->isDeleted() || !window->isManaged()) {
+      continue;
+    }
+
+    if (window->caption() == windowName && window->windowClass() == appName) {
+      KWin::effects->activateWindow(window);
+      return true;
+    }
+  }
+
+  return false;
 }

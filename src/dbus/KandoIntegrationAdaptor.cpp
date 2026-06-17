@@ -17,4 +17,13 @@ KandoIntegrationAdaptor::KandoIntegrationAdaptor(KandoKWinIntegrationPlugin* plu
 
 QVariantMap KandoIntegrationAdaptor::GetWMInfo() const { return mPlugin->getWMInfo(); }
 
+QVariantList KandoIntegrationAdaptor::GetOpenWindows() const {
+  return mPlugin->getOpenWindows();
+}
+
+bool KandoIntegrationAdaptor::FocusWindow(const QString& windowName,
+                                          const QString& appName) const {
+  return mPlugin->focusWindow(windowName, appName);
+}
+
 QString KandoIntegrationAdaptor::Ping() const { return QStringLiteral("pong"); }

@@ -12,6 +12,7 @@
 
 #include <effect/effect.h>
 
+#include <QVariantList>
 #include <QVariantMap>
 
 #include "input/PointerInput.h"
@@ -26,6 +27,8 @@ class KandoKWinIntegrationPlugin : public KWin::Effect {
   ~KandoKWinIntegrationPlugin() override;
 
   QVariantMap getWMInfo() const;
+  QVariantList getOpenWindows() const;
+  bool focusWindow(const QString& windowName, const QString& appName) const;
 
  private:
   KandoIntegrationAdaptor* mAdaptor;

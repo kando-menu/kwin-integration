@@ -12,6 +12,8 @@
 
 #include <QDBusAbstractAdaptor>
 #include <QObject>
+#include <QString>
+#include <QVariantList>
 #include <QVariantMap>
 
 class KandoKWinIntegrationPlugin;
@@ -25,6 +27,8 @@ class KandoIntegrationAdaptor : public QDBusAbstractAdaptor {
 
  public Q_SLOTS:
   QVariantMap GetWMInfo() const;
+  QVariantList GetOpenWindows() const;
+  bool FocusWindow(const QString& windowName, const QString& appName) const;
   QString Ping() const;
 
  private:

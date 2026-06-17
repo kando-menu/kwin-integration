@@ -14,9 +14,14 @@ Security   - in case of vulnerabilities.
 
 This changelog uses [semantic versioning](https://semver.org) and follows the rules of [Keep a Changelog](http://keepachangelog.com/).
 
-## [unreleased]
+## [KWin Integration 0.2.0](https://github.com/kando-menu/kwin-integration/releases/tag/v0.2.0)
 
-**Release Date:** TBD
+**Release Date:** 2026-06-17
+
+### :tada: Added
+
+- A method to list all open windows, which is used by the "Focus Window" action to find the window to focus. This method retrieves the stacking order of windows from KWin and returns their titles and classes.
+- A method to focus a window by its title and class. This method iterates through the open windows and activates the one that matches the given title and class.
 
 ## [KWin Integration 0.1.0](https://github.com/kando-menu/kwin-integration/releases/tag/v0.1.0)
 
