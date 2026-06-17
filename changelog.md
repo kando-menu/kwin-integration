@@ -18,6 +18,12 @@ This changelog uses [semantic versioning](https://semver.org) and follows the ru
 
 **Release Date:** TBD
 
+## [KWin Integration 0.1.0](https://github.com/kando-menu/kwin-integration/releases/tag/v0.1.0)
+
+**Release Date:** 2026-06-15
+
 ### :tada: Added
 
-- The initial version of the KWin Integration plugin for Kando. It provides all the functionality required by Kando 3.0.0.
+- The initial version of the KWin Integration plugin for Kando. It provides functionality similar to the Kando GNOME Shell extension, but for KDE Plasma. This includes:
+  - Getting the current pointer position (mouse or stylus, depending on which was used last).
+  - Getting the currently focused window.
