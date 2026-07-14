@@ -10,6 +10,7 @@
 
 #include "KandoKWinIntegrationPlugin.h"
 
+#include <config-kwin.h>
 #include <effect/effecthandler.h>
 #include <effect/effectwindow.h>
 
@@ -56,8 +57,12 @@ QVariantMap KandoKWinIntegrationPlugin::getWMInfo() const {
   const auto windowName = activeWindow ? activeWindow->caption() : QString();
   const auto appName    = activeWindow ? activeWindow->windowClass() : QString();
 
+#if (PROJECT_VERSION_MAJOR >= 6) && (PROJECT_VERSION_MINOR >= 7)
+  QRectF workArea = KWin::effects->clientArea(KWin::MaximizeArea, pointerPos.toPoint());
+#else
   QRectF workArea =
     KWin::effects->clientArea(KWin::MaximizeArea, pointerPos.toPoint(), nullptr);
+#endif
 
   return {
     {QStringLiteral("windowName"), windowName},
