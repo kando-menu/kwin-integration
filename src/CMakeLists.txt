@@ -32,3 +32,8 @@ elseif(DEFINED KWin_VERSION AND KWin_VERSION VERSION_GREATER_EQUAL "6.3.0")
 else()
   target_compile_definitions(kandointegration PRIVATE KANDO_KWIN_HAS_TABLET_TOOL_EVENT)
 endif()
+
+# KWin 6.7 changed EffectHandler::clientArea() and removed the screen argument.
+if(DEFINED KWin_VERSION AND KWin_VERSION VERSION_GREATER_EQUAL "6.7.0")
+  target_compile_definitions(kandointegration PRIVATE KANDO_KWIN_HAS_CLIENT_AREA_TWO_ARGS)
+endif()
