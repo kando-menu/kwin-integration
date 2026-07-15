@@ -65,7 +65,7 @@ If you are using Arch or a derivative, you can install the required packages wit
 
 ```bash
 sudo pacman -S --needed base-devel cmake ninja pkgconf git extra-cmake-modules kwin libdrm \
-                 wayland libxkbcommon libxcb xcb-util mesa libinput qt6-base
+                 wayland libxkbcommon libxcb xcb-util mesa libinput qt6-base vulkan-headers
 ```
 
 #### Building and Installing
