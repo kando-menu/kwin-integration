@@ -64,6 +64,27 @@ jobs:
     container:
       image: ghcr.io/kando-menu/kwin-dev-containers-${{ matrix.target.distro }}-${{ matrix.target.version }}:latest
     steps:
+      - name: Print KWin Version
+        id: kwin_version
+        shell: bash
+        run: |
+          VERSION="unknown"
+
+          # Ubuntu / Debian containers
+          if command -v dpkg-query >/dev/null 2>&1; then
+            VERSION="$(dpkg-query -W -f='${Version}' kwin-dev 2>/dev/null || echo unknown)"
+          fi
+
+          # Fedora / RPM containers
+          if [[ "$VERSION" == "unknown" ]] && command -v rpm >/dev/null 2>&1; then
+            VERSION="$(rpm -q --qf '%{VERSION}' kwin-devel 2>/dev/null || echo unknown)"
+          fi
+
+          VERSION="${VERSION%%-*}"
+          VERSION="${VERSION#*:}"
+          VERSION="${VERSION//[^0-9A-Za-z._-]/_}"
+
+          echo "KWin Version: $VERSION"
       - name: Checkout Repository
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 #v6.0.3
       - name: Compile
