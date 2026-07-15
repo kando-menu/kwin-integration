@@ -39,6 +39,7 @@ jobs:
     name: Compile
     runs-on: ${{ matrix.architecture }}
     strategy:
+      fail-fast: false
       matrix:
         target:
           - distro: ubuntu

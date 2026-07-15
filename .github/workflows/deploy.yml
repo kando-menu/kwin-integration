@@ -16,7 +16,6 @@ jobs:
     name: Compile and Upload Plugin
     runs-on: ${{ matrix.architecture }}
     strategy:
-      fail-fast: false
       matrix:
         target:
           - distro: ubuntu
