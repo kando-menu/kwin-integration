@@ -34,6 +34,8 @@ jobs:
             version: "43"
           - distro: fedora
             version: "44"
+          - distro: fedora
+            version: "45"
         architecture: [ubuntu-26.04, ubuntu-26.04-arm]
     container:
       image: ghcr.io/kando-menu/kwin-dev-containers-${{ matrix.target.distro }}-${{ matrix.target.version }}:latest

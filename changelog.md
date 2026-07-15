@@ -14,6 +14,15 @@ Security   - in case of vulnerabilities.
 
 This changelog uses [semantic versioning](https://semver.org) and follows the rules of [Keep a Changelog](http://keepachangelog.com/).
 
+## [KWin Integration 0.3.0](https://github.com/kando-menu/kwin-integration/releases/tag/v0.3.0)
+
+**Release Date:** 2026-07-15
+
+### :tada: Added
+
+- Support for KWin 6.7. Thanks to [@Henry-Denny](https://github.com/Henry-Denny) for this contribution.
+- Pre-built binaries for the current version of the upcoming Fedora 45.
+
 ## [KWin Integration 0.2.0](https://github.com/kando-menu/kwin-integration/releases/tag/v0.2.0)
 
 **Release Date:** 2026-06-17
