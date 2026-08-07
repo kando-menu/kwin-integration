@@ -5,6 +5,12 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # Changelog of the KWin Integration Plugin for Kando
 
+## [KWin Integration 0.3.1](https://github.com/kando-menu/kwin-integration/releases/tag/v0.3.1)
+
+**Release Date:** 2026-08-07
+
+- Rebuilt the plugin with the latest versions of Qt6, KWin, and KDE Frameworks. Functionality remains the same, feel free to use 0.3.0 if your KWin version is not yet compatible with this release.
+
 ## [KWin Integration 0.3.0](https://github.com/kando-menu/kwin-integration/releases/tag/v0.3.0)
 
 **Release Date:** 2026-07-15
