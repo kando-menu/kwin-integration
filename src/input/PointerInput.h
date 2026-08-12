@@ -10,27 +10,30 @@
 
 #pragma once
 
-#include <input.h>
+#include <input_event_spy.h>
 
 #include <QPoint>
 
-class PointerInput : public KWin::InputEventFilter {
+// An InputEventSpy sees every event before InputEventFilters do, so unlike a filter it
+// still receives pointer motion while KWin's drag-and-drop filter has grabbed the
+// pointer.
+class PointerInput : public KWin::InputEventSpy {
  public:
   PointerInput();
   ~PointerInput() override = default;
 
   QPointF const& lastPosition() const;
 
-  bool pointerMotion(KWin::PointerMotionEvent* event) override;
+  void pointerMotion(KWin::PointerMotionEvent* event) override;
 
 #if defined(KANDO_KWIN_HAS_TABLET_TOOL_AXIS_PROXIMITY_STRUCT_EVENTS)
-  bool tabletToolAxisEvent(KWin::TabletToolAxisEvent* event) override;
-  bool tabletToolProximityEvent(KWin::TabletToolProximityEvent* event) override;
+  void tabletToolAxisEvent(KWin::TabletToolAxisEvent* event) override;
+  void tabletToolProximityEvent(KWin::TabletToolProximityEvent* event) override;
 #elif defined(KANDO_KWIN_HAS_TABLET_TOOL_AXIS_PROXIMITY_TABLET_EVENT)
-  bool tabletToolAxisEvent(KWin::TabletEvent* event) override;
-  bool tabletToolProximityEvent(KWin::TabletEvent* event) override;
+  void tabletToolAxisEvent(KWin::TabletEvent* event) override;
+  void tabletToolProximityEvent(KWin::TabletEvent* event) override;
 #elif defined(KANDO_KWIN_HAS_TABLET_TOOL_EVENT)
-  bool tabletToolEvent(KWin::TabletEvent* event) override;
+  void tabletToolEvent(KWin::TabletEvent* event) override;
 #endif
 
  private:
