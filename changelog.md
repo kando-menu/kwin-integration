@@ -7,7 +7,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 ## [KWin Integration 0.4.0](https://github.com/kando-menu/kwin-integration/releases/tag/v0.4.0)
 
-**Release Date:** TBD
+**Release Date:** 2026-08-12
 
 - The plugin now uses KWin's `InputSpy` instead of `InputFilter` to get the current pointer position. This allows getting the pointer position even during drag-and-drop operations, which was not possible before.
 

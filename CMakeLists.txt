@@ -10,7 +10,7 @@
 
 cmake_minimum_required(VERSION 3.20)
 
-project(KandoKWinIntegration VERSION 0.1.0 LANGUAGES CXX)
+project(KandoKWinIntegration VERSION 0.4.0 LANGUAGES CXX)
 
 # Generate compile_commands.json for editor tooling (clangd/VS Code IntelliSense).
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)

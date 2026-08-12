@@ -2,7 +2,7 @@
   "KPlugin": {
     "Name": "Kando KWin Integration",
     "Description": "KWin plugin exposing a D-Bus API for Kando.",
-    "Version": "0.1.0",
+    "Version": "0.4.0",
     "License": "MIT",
     "Authors": [
       {
