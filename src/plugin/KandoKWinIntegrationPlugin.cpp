@@ -12,6 +12,7 @@
 
 #include <effect/effecthandler.h>
 #include <effect/effectwindow.h>
+#include <input.h>
 
 #include <QDBusConnection>
 #include <QDBusError>
@@ -26,7 +27,7 @@ const auto kObjectPath  = QStringLiteral("/menu/kando/KWinIntegration");
 
 KandoKWinIntegrationPlugin::KandoKWinIntegrationPlugin()
     : KWin::Effect(), mAdaptor(new KandoIntegrationAdaptor(this)) {
-  KWin::input()->installInputEventFilter(&mPointerInput);
+  KWin::input()->installInputEventSpy(&mPointerInput);
 
   auto bus = QDBusConnection::sessionBus();
 
@@ -46,7 +47,7 @@ KandoKWinIntegrationPlugin::~KandoKWinIntegrationPlugin() {
   bus.unregisterObject(kObjectPath);
   bus.unregisterService(kServiceName);
 
-  KWin::input()->uninstallInputEventFilter(&mPointerInput);
+  KWin::input()->uninstallInputEventSpy(&mPointerInput);
 }
 
 QVariantMap KandoKWinIntegrationPlugin::getWMInfo() const {
